@@ -1,63 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>PUSSSNPUR</title>
     <style>
-        body { background: #000; color: #fff; font-family: Arial, sans-serif; margin: 0; padding: 50px; }
-        .wrapper { filter: blur(0.6px); max-width: 600px; }
+        body { background: #000; color: #fff; font-family: Arial, sans-serif; margin: 0; overflow-x: hidden; }
         
-        /* Glitch Animation */
-        .glitch { animation: glitch-anim 2s infinite; position: relative; }
-        @keyframes glitch-anim {
-            0% { transform: translate(0) }
-            2% { transform: translate(-5px, 5px) }
-            4% { transform: translate(5px, -5px) }
-            6% { transform: translate(0) }
-            100% { transform: translate(0) }
+        /* CRT Scanline Overlay */
+        body::before {
+            content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 999; background-size: 100% 4px, 3px 100%; pointer-events: none;
         }
 
-        h1 { font-size: 6rem; margin: 0 0 40px 0; text-transform: uppercase; cursor: crosshair; }
-        h2 { font-size: 2rem; text-decoration: underline; margin-top: 60px; }
+        .wrapper { max-width: 900px; padding: 50px; }
         
-        /* Artist Card Styling */
-        .artist-card { 
-            border: 1px solid #fff; padding: 20px; margin: 10px 0; 
-            cursor: pointer; transition: 0.1s; display: block; color: #fff; text-decoration: none;
+        h1 { font-size: 8rem; margin: 0 0 20px 0; text-transform: uppercase; }
+        
+        /* The Bigger Manifesto */
+        .manifesto { 
+            font-size: 3.5rem; 
+            line-height: 1; 
+            font-weight: 900; 
+            margin: 60px 0; 
         }
+
+        .artist-card { border: 3px solid #fff; padding: 30px; display: block; color: #fff; text-decoration: none; margin: 40px 0; font-size: 2rem; }
         .artist-card:hover { background: #fff; color: #000; }
-
-        .music-embed { margin-top: 50px; filter: grayscale(100%) contrast(150%); }
+        
+        /* Random Glitch Artifact */
+        #glitch-box {
+            position: fixed; display: none; z-index: 1000; pointer-events: none;
+            background: #f0f; width: 150px; height: 80px; opacity: 0.8;
+        }
     </style>
 </head>
 <body>
 
-    <div class="wrapper">
-        <h1 class="glitch">PUSSSNPUR</h1>
+    <div id="glitch-box"></div>
 
-        <section>
+    <div class="wrapper">
+        <h1>PUSSSNPUR</h1>
+        
+        <section class="manifesto">
             <p>I created this label to house my ideas, my procrastinations, my music, art, and concepts—pouring every bit of my heart into it. Perhaps it was a bad decision, perhaps not. Regardless, I hope my work inspires you to create your own art, music, and visuals. We always start somewhere, even in our most vulnerable moments. So, go on. Make the music you want, the music you dream of, and the music you love.</p>
         </section>
-
-        <section>
-            <h2>ARTISTS</h2>
-            <a href="artist.html" class="artist-card">
-                ARTIST NAME // VIEW PROFILE
-            </a>
-        </section>
-
-        <section class="music-embed">
-            <iframe style="border: 0; width: 100%; height: 450px;" src="https://bandcamp.com/EmbeddedPlayer/album=YOUR_ALBUM_ID/size=large/bgcol=000000/linkcol=ffffff/transparent=true/" seamless></iframe>
-        </section>
+        
+        <a href="artist.html" class="artist-card">ARTIST NAME // VIEW</a>
     </div>
 
     <script>
-        // Randomly glitch the H1 header
-        setInterval(() => {
-            const h1 = document.querySelector('h1');
-            h1.style.transform = `translate(${Math.random()*10-5}px, ${Math.random()*10-5}px)`;
-            setTimeout(() => h1.style.transform = 'translate(0)', 100);
-        }, 3000);
+        function glitch() {
+            const box = document.getElementById('glitch-box');
+            const corners = [
+                {top: '20px', left: '20px'}, {top: '20px', right: '20px', left: 'auto'},
+                {bottom: '20px', left: '20px'}, {bottom: '20px', right: '20px', left: 'auto'}
+            ];
+            const pos = corners[Math.floor(Math.random() * corners.length)];
+            box.style.display = 'block';
+            Object.assign(box.style, pos);
+            setTimeout(() => box.style.display = 'none', Math.random() * 200 + 50);
+            setTimeout(glitch, Math.random() * 2000 + 500);
+        }
+        glitch();
     </script>
 </body>
 </html>
