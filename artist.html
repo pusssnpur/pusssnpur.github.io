@@ -4,30 +4,34 @@
     <style>
         body { 
             background: #000; 
-            color: #ff0000; /* STRICT RED */
+            color: #ff0000; 
             font-family: Arial, sans-serif; 
             margin: 0; 
             padding: 50px; 
             text-transform: uppercase; 
+            overflow-x: hidden;
         }
 
-        /* CRT Scanline Overlay */
+        /* Scanline Overlay */
         body::before {
             content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
             background: linear-gradient(rgba(255,0,0,0.1) 50%, rgba(0,0,0,0.2) 50%);
             background-size: 100% 4px; pointer-events: none; z-index: 99;
         }
 
-        /* Enforce Red Everywhere */
         * { color: #ff0000; border-color: #ff0000 !important; }
-        
         .container { max-width: 700px; position: relative; z-index: 100; }
-        h1 { font-size: 6rem; margin: 0; text-shadow: 2px 2px #fff; }
-        .album-title { font-size: 3rem; margin: 20px 0; border: 1px solid #ff0000; padding: 10px; display: inline-block; }
         
-        .music-embed { margin: 40px 0; }
+        h1 { font-size: 6rem; margin: 0; text-shadow: 2px 2px #fff; }
+        
+        /* Boxes */
+        .box { border: 2px solid #ff0000; padding: 20px; margin: 30px 0; font-weight: bold; }
+        .box-title { font-size: 0.8rem; margin-bottom: 10px; }
+        .release-item { margin-bottom: 15px; font-size: 1.5rem; }
+        
+        /* Artifacts */
+        .artifact { position: fixed; pointer-events: none; z-index: 999; opacity: 0.6; }
 
-        .socials-nav { margin-top: 50px; display: flex; flex-wrap: wrap; gap: 20px; font-weight: bold; }
         a { text-decoration: underline; }
         a:hover { background: #ff0000; color: #000; }
     </style>
@@ -36,13 +40,25 @@
 
     <div class="container">
         <h1>LOCALWHO</h1>
-        <div class="album-title">ABORTION</div>
 
-        <section class="music-embed">
-            <iframe style="border: 0; width: 350px; height: 470px;" src="https://bandcamp.com/EmbeddedPlayer/album=769994563/size=large/bgcol=333333/linkcol=e32c14/tracklist=false/transparent=true/" seamless><a href="https://localwho.bandcamp.com/album/abortion">abortion by LOCALWHO</a></iframe>
+        <section class="box">
+            <div class="box-title">// RELEASES</div>
+            <div class="release-item">ABORTION // 2026.05.25</div>
+            <div class="release-item" style="color: #fff;">ILY4EVA // SOON</div>
         </section>
 
-        <section class="socials-nav">
+        <section class="box">
+            <div class="box-title">// CONCEPT</div>
+            <p style="line-height: 1.4; font-size: 1.1rem; color: #ff0000;">
+                The new first studio album of LOCALWHO, called “abortion” was released on may 25th, 2026, 2 days after its planned release on may 23rd, 2026, exactly 3 months after the artists birth month and day. The project, titled “abortion” was a random thought in one of my online classes , and the project started at march 31rst, 2026, lasting 8 weeks and one day. Its public release was announced on the artists official bandcamp page on may 25th.
+            </p>
+        </section>
+
+        <section class="music-embed">
+            <iframe style="border: 0; width: 350px; height: 470px;" src="https://bandcamp.com/EmbeddedPlayer/album=769994563/size=large/bgcol=333333/linkcol=e32c14/tracklist=false/transparent=true/" seamless></iframe>
+        </section>
+
+        <section class="socials-nav" style="margin-top: 50px; display: flex; flex-wrap: wrap; gap: 20px; font-weight: bold;">
             <a href="https://www.tiktok.com/@localwho">TIKTOK</a>
             <a href="https://bsky.app/profile/localwho.bsky.social">BLUESKY</a>
             <a href="https://www.instagram.com/divacharlizhekeha/">INSTAGRAM</a>
@@ -54,5 +70,22 @@
         </nav>
     </div>
 
+    <script>
+        function spawnArtifact() {
+            const colors = ['#ff0000', '#00ff00', '#00ffff', '#ffff00', '#ff00ff'];
+            const art = document.createElement('div');
+            art.className = 'artifact';
+            art.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            art.style.top = Math.random() * 100 + 'vh';
+            art.style.left = Math.random() * 100 + 'vw';
+            art.style.width = Math.random() * 200 + 50 + 'px';
+            art.style.height = Math.random() * 100 + 20 + 'px';
+            document.body.appendChild(art);
+            setTimeout(() => art.remove(), Math.random() * 500 + 100);
+            setTimeout(spawnArtifact, Math.random() * 1000 + 200);
+        }
+        spawnArtifact();
+        spawnArtifact();
+    </script>
 </body>
 </html>
