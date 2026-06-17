@@ -2,73 +2,61 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PUSSSNPUR</title>
     <style>
         body { 
-            background: #8ACE00; /* The Brat green */
-            color: #000; 
+            background: #000; 
+            color: #fff; 
             font-family: Arial, sans-serif;
             margin: 0; 
-            padding: 20px;
-            text-transform: uppercase;
+            padding: 50px;
+        }
+
+        /* The blurry, low-quality aesthetic */
+        .wrapper {
+            filter: blur(0.8px);
+            max-width: 600px;
         }
 
         h1 { 
-            font-size: 15vw; 
-            margin: 0; 
+            font-size: 8rem; 
             line-height: 0.8; 
-            font-weight: 900;
+            margin: 0 0 50px 0;
+            text-transform: uppercase;
         }
 
-        .container { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 50px; 
-            padding-top: 50px;
+        p { 
+            font-size: 1.5rem; 
+            line-height: 1.1;
+            margin-bottom: 30px;
         }
 
-        .manifesto { 
-            font-size: 3rem; 
-            font-weight: 700; 
-            line-height: 1;
-            max-width: 900px;
+        .music-embed {
+            margin-top: 50px;
+            filter: grayscale(100%) contrast(150%);
         }
 
-        .music-box { 
-            width: 100%; 
-            max-width: 600px;
-            border: 5px solid #000;
-        }
-
-        .footer { 
-            font-size: 2rem; 
-            font-weight: bold;
-            text-decoration: underline;
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 20vw; }
-            .manifesto { font-size: 1.5rem; }
-        }
+        a { color: #fff; text-decoration: underline; }
     </style>
 </head>
 <body>
 
-    <h1>PUSSSNPUR</h1>
+    <div class="wrapper">
+        <h1>PUSSSNPUR</h1>
 
-    <div class="container">
-        <section class="manifesto">
-            <p>I created this label to house my ideas, my procrastinations, my music, art, and concepts—pouring every bit of my heart into it. Perhaps it was a bad decision, perhaps not. Regardless, I hope my work inspires you to create your own art, music, and visuals. We always start somewhere, even in our most vulnerable moments. So, go on. Make the music you want, the music you dream of, and the music you love.</p>
+        <section>
+            <p>I created this label to house my ideas, my procrastinations, my music, art, and concepts—pouring every bit of my heart into it. Perhaps it was a bad decision, perhaps not.</p>
+            <p>I hope my work inspires you to create your own art, music, and visuals. We always start somewhere, even in our most vulnerable moments.</p>
+            <p>So, go on. Make the music you want, the music you dream of, and the music you love.</p>
         </section>
 
-        <section class="music-box">
-            <iframe style="border: 0; width: 100%; height: 450px;" src="https://bandcamp.com/EmbeddedPlayer/album=YOUR_ALBUM_ID/size=large/bgcol=8ace00/linkcol=000000/transparent=true/" seamless></iframe>
+        <section class="music-embed">
+            <iframe style="border: 0; width: 100%; height: 450px;" src="https://bandcamp.com/EmbeddedPlayer/album=YOUR_ALBUM_ID/size=large/bgcol=000000/linkcol=ffffff/transparent=true/" seamless></iframe>
         </section>
 
-        <section class="footer">
-            <a href="mailto:pusssnpur@proton.me" style="color: #000;">PUSSSNPUR@PROTON.ME</a>
-            <p>EST. 2023 // RESURRECTED 2026</p>
+        <section style="margin-top: 50px;">
+            <p><a href="mailto:pusssnpur@proton.me">PUSSSNPUR@PROTON.ME</a></p>
+            <p style="font-size: 0.8rem; opacity: 0.5;">EST. 2023 // 2026</p>
         </section>
     </div>
 
