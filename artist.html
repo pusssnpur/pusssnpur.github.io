@@ -2,42 +2,67 @@
 <html lang="en">
 <head>
     <style>
-        body { background: #000; color: #fff; font-family: Arial, sans-serif; margin: 0; padding: 40px; }
-        
-        /* Scanline CRT overlay */
+        body { 
+            background: #000; 
+            color: #ff0000; /* STRICT RED */
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 50px; 
+            text-transform: uppercase; 
+        }
+
+        /* CRT Scanline Overlay */
         body::before {
             content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(0,0,0,0) 50%, rgba(0,0,0,0.2) 50%);
+            background: linear-gradient(rgba(255,0,0,0.1) 50%, rgba(0,0,0,0.2) 50%);
             background-size: 100% 4px; pointer-events: none; z-index: 99;
         }
 
-        .container { max-width: 600px; }
-        h1 { font-size: 5rem; text-transform: uppercase; margin: 0; color: #ff00ff; }
+        h1, .album-title, a, p { color: #ff0000; }
         
-        .bio { font-size: 1.8rem; font-weight: bold; margin: 40px 0; border-left: 5px solid #fff; padding-left: 20px; }
+        .container { max-width: 700px; }
+        h1 { font-size: 6rem; margin: 0; text-shadow: 2px 2px #fff; }
+        .album-title { font-size: 3rem; margin: 20px 0; border: 1px solid #ff0000; padding: 10px; }
         
-        .music-embed { margin: 40px 0; filter: invert(1) contrast(2); }
-        
-        .nav { display: flex; gap: 20px; font-size: 1.2rem; }
-        a { color: #fff; text-decoration: none; border-bottom: 1px solid #fff; }
+        .music-embed { margin: 40px 0; border: 2px solid #ff0000; }
+
+        /* X INTEGRATION: A raw, scrolling feed window */
+        .x-integration { 
+            border: 2px solid #ff0000; 
+            padding: 20px; 
+            margin-top: 40px; 
+            height: 300px; 
+            overflow-y: scroll; 
+        }
+
+        .socials-nav { margin-top: 50px; display: flex; flex-wrap: wrap; gap: 20px; font-weight: bold; }
+        a { text-decoration: underline; }
     </style>
 </head>
 <body>
 
     <div class="container">
         <h1>LOCALWHO</h1>
-        
-        <div class="bio">
-            <p>// DATA CORRUPTED // AFTER LOVE // ABORTION // MUSIC FOR THE VULNERABLE //</p>
-        </div>
+        <div class="album-title">ABORTION</div>
 
         <section class="music-embed">
-            <iframe style="border: 0; width: 100%; height: 450px;" src="https://bandcamp.com/EmbeddedPlayer/album=3276856557/size=large/bgcol=000000/linkcol=ff00ff/transparent=true/" seamless></iframe>
+            <iframe style="border: 0; width: 100%; height: 120px;" src="https://bandcamp.com/EmbeddedPlayer/album=YOUR_ALBUM_ID/size=large/bgcol=000000/linkcol=ff0000/transparent=true/" seamless></iframe>
         </section>
 
-        <nav class="nav">
+        <section class="x-integration">
+            <a class="twitter-timeline" href="https://twitter.com/benxiee_twt?ref_src=twsrc%5Etfw">TWEETS BY @BENXIEE_TWT</a> 
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </section>
+
+        <section class="socials-nav">
+            <a href="https://www.tiktok.com/@localwho">TIKTOK</a>
+            <a href="https://bsky.app/profile/localwho.bsky.social">BLUESKY</a>
+            <a href="https://www.instagram.com/divacharlizhekeha/">INSTAGRAM</a>
+            <a href="https://x.com/benxiee_twt">X/TWITTER</a>
+        </section>
+
+        <nav style="margin-top: 60px;">
             <a href="index.html"><< BACK TO LABEL</a>
-            <a href="mailto:pusssnpur@proton.me">CONTACT</a>
         </nav>
     </div>
 
