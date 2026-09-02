@@ -24,8 +24,24 @@
         
         h1 { font-size: 6rem; margin: 0; text-shadow: 2px 2px #00cc66; }
         
-        /* Boxes */
-        .box { border: 2px solid #ff3399; padding: 20px; margin: 30px 0; font-weight: bold; background: #fff5f8; }
+        /* Boxes - Side by Side */
+        .releases-wrapper {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .box { 
+            border: 2px solid #ff3399; 
+            padding: 20px; 
+            font-weight: bold; 
+            background: #fff5f8; 
+            flex: 1;
+            min-width: 280px;
+        }
+        
         .box-title { font-size: 0.8rem; margin-bottom: 10px; color: #00cc66; }
         .release-item { margin-bottom: 15px; font-size: 1.5rem; }
         
@@ -50,13 +66,14 @@
     <div class="container">
         <h1>LOCALWHO</h1>
 
-        <section class="box" style="border-color: #00cc66 !important;">
-            <div class="box-title">// RELEASES</div>
-            <div class="release-item">ABORTION // 2026.05.25</div>
-            <div class="release-item" style="color: #00cc66;">ILY4EVA // 2026.07.24</div>
-            <div class="release-item" style="color: #00cc66;">ABORTION CLINIC 300M AWAY FROM YOU // SOON</div>
-        </section>
-
+        <div class="releases-wrapper">
+            <section class="box" style="border-color: #00cc66 !important;">
+                <div class="box-title">// RELEASES</div>
+                <div class="release-item">ABORTION // 2026.05.25</div>
+                <div class="release-item" style="color: #00cc66;">ILY4EVA // 2026.07.24</div>
+                <div class="release-item" style="color: #00cc66;">ABORTION CLINIC 300M AWAY FROM YOU // SOON</div>
+            </section>
+        </div>
 
         <section class="music-embed">
             <iframe style="border: 0; width: 350px; height: 470px;" src="https://bandcamp.com/EmbeddedPlayer/album=2154375449/size=large/bgcol=ffffff/linkcol=f171a2/tracklist=false/transparent=true/" seamless><a href="https://localwho.bandcamp.com/album/ily4eva">ily4eva by LOCALWHO</a></iframe>
