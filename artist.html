@@ -8,14 +8,44 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      background: #fff;
+      color: #000;
+      font-family: Arial, sans-serif;
+      text-align: center;
     }
     h1 {
       font-size: 25vw;
-      font-family: Arial, sans-serif;
+      margin: 0;
     }
+    #msg {
+      display: none;
+      max-width: 80vw;
+      font-size: 4vw;
+      font-weight: bold;
+      line-height: 1.4;
+    }
+    body.flash { animation: flash 0.5s steps(1) infinite; }
+    @keyframes flash {
+      0%   { background: #fff; color: #000; }
+      50%  { background: #000; color: #fff; }
+    }
+    body.final { background: #000; color: #f00; }
   </style>
 </head>
 <body>
-  <h1>WHO</h1>
+  <h1 id="who">WHO</h1>
+  <div id="msg">EVEN THOUGH YOU DIDINT RECOGNISE ME AS A LOCAL ILL STILL BE A WHO. SCRAP THIS SHIT, SLIT MY WRISTS AND DIE. I LOOKED INTO YOUR EYES, I THOUGHT THAT I COULD SEE A WHOLE NEW WORLD. BUT IT WASNT A WHOLE NEW WORLD. IT WAS THE SAME BULLSHIT. AND I REASIMILATE EVERYTHING AGAIN.</div>
+
+  <script>
+    setTimeout(() => {
+      document.body.classList.add('flash');
+      setTimeout(() => {
+        document.body.classList.remove('flash');
+        document.body.classList.add('final');
+        document.getElementById('who').style.display = 'none';
+        document.getElementById('msg').style.display = 'block';
+      }, 4000);
+    }, 10000);
+  </script>
 </body>
 </html>
