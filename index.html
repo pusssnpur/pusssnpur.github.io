@@ -1,66 +1,288 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <style>
-        body { background: #000; color: #fff; font-family: Arial, sans-serif; margin: 0; overflow-x: hidden; }
-        
-        /* CRT Scanline Overlay */
-        body::before {
-            content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            z-index: 999; background-size: 100% 4px, 3px 100%; pointer-events: none;
-        }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>pusssnpur</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one black column. Giant striped wordmark, the label's own statement set large, a bordered link, then a quiet catalogue index. Single dark look on purpose. */
+:root {
+  --bg: #050505;
+  --fg: #ececec;
+  --dim: #8a8a8a;
+  --line: #d8d8d8;
+  --stripe: #050505;
+  --display: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--bg); }
+body {
+  margin: 0;
+  color: var(--fg);
+  font-family: var(--display);
+  padding-block: 28px 40px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px; }
 
-        .wrapper { max-width: 900px; padding: 50px; }
-        
-        h1 { font-size: 8rem; margin: 0 0 20px 0; text-transform: uppercase; }
-        
-        /* The Bigger Manifesto */
-        .manifesto { 
-            font-size: 3.5rem; 
-            line-height: 1; 
-            font-weight: 900; 
-            margin: 60px 0; 
-        }
+.top { display: flex; justify-content: space-between; gap: 16px; font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
 
-        .artist-card { border: 3px solid #fff; padding: 30px; display: block; color: #fff; text-decoration: none; margin: 40px 0; font-size: 2rem; }
-        .artist-card:hover { background: #fff; color: #000; }
-        
-        /* Random Glitch Artifact */
-        #glitch-box {
-            position: fixed; display: none; z-index: 1000; pointer-events: none;
-            background: #f0f; width: 150px; height: 80px; opacity: 0.8;
-        }
-    </style>
-</head>
-<body>
+.top { flex-wrap: wrap; }
+.top-words { text-align: right; }
+.top button { appearance: none; background: none; border: 0; padding: 0; margin: 0; font: inherit; letter-spacing: inherit; text-transform: inherit; color: var(--fg); cursor: pointer; }
+.top button:hover { text-decoration: underline; text-underline-offset: 4px; }
+.top button:focus-visible { outline: 3px solid var(--fg); outline-offset: 3px; }
 
-    <div id="glitch-box"></div>
+/* wordmark: white fill cut by horizontal scanlines that drift slowly */
+h1 {
+  margin: 0;
+  font-weight: 800;
+  font-size: min(13.4vw, 170px);
+  line-height: .9;
+  letter-spacing: -.035em;
+  white-space: nowrap;
+  color: transparent;
+  background-image: repeating-linear-gradient(180deg, var(--fg) 0 3px, var(--stripe) 3px 4px);
+  background-size: 100% 8px;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: drift 6s linear infinite;
+}
+@keyframes drift { to { background-position: 0 8px; } }
 
-    <div class="wrapper">
-        <h1>PUSSSNPUR</h1>
-        
-        <section class="manifesto">
-            <p>I created this label to house my ideas, my procrastinations, my music, art, and concepts—pouring every bit of my heart into it. Perhaps it was a bad decision, perhaps not. Regardless, I hope my work inspires you to create your own art, music, and visuals. We always start somewhere, even in our most vulnerable moments. So, go on. Make the music you want, the music you dream of, and the music you love.</p>
-        </section>
-        
-        <a href="artist.html" class="artist-card">LOCALWHO // VIEW</a>
-    </div>
+.statement {
+  margin: 0;
+  max-width: 22em;
+  font-weight: 700;
+  font-size: clamp(26px, 4.6vw, 50px);
+  line-height: 1.06;
+  letter-spacing: -.015em;
+  text-wrap: pretty;
+}
 
-    <script>
-        function glitch() {
-            const box = document.getElementById('glitch-box');
-            const corners = [
-                {top: '20px', left: '20px'}, {top: '20px', right: '20px', left: 'auto'},
-                {bottom: '20px', left: '20px'}, {bottom: '20px', right: '20px', left: 'auto'}
-            ];
-            const pos = corners[Math.floor(Math.random() * corners.length)];
-            box.style.display = 'block';
-            Object.assign(box.style, pos);
-            setTimeout(() => box.style.display = 'none', Math.random() * 200 + 50);
-            setTimeout(glitch, Math.random() * 2000 + 500);
-        }
-        glitch();
-    </script>
-</body>
+.link {
+  display: block;
+  padding: 18px 18px;
+  border: 2px solid var(--line);
+  color: var(--fg);
+  text-decoration: none;
+  font-family: var(--mono);
+  font-size: 16px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  transition: background .15s, color .15s;
+}
+.link:hover { background: var(--fg); color: var(--bg); }
+.link:focus-visible { outline: 3px solid var(--fg); outline-offset: 4px; }
+
+.belt { overflow: hidden; border-block: 1px solid #2a2a2a; padding-block: 14px; }
+.belt-track { display: flex; gap: 40px; width: max-content; animation: belt 28s linear infinite; font-weight: 800; font-size: clamp(22px, 3.4vw, 36px); letter-spacing: -.01em; text-transform: uppercase; }
+.belt-track button { appearance: none; background: none; border: 0; padding: 0; margin: 0; font: inherit; letter-spacing: inherit; text-transform: inherit; color: var(--fg); white-space: nowrap; cursor: pointer; }
+.belt-track button:nth-child(even) { color: var(--dim); }
+.belt-track button:hover { color: var(--fg); text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px; }
+.belt-track button:focus-visible { outline: 3px solid var(--fg); outline-offset: 4px; }
+.belt:hover .belt-track { animation-play-state: paused; }
+
+.floater { animation: fl .5s steps(1) infinite; position: fixed; left: 0; top: 0; z-index: 20; padding: 12px 14px; font-family: var(--mono); font-weight: 500; font-size: 26px; line-height: 1; color: var(--fg); background: var(--bg); border: 2px solid var(--line); text-decoration: none; will-change: transform; touch-action: manipulation; }
+.floater:hover { animation-play-state: paused; }
+@keyframes fl { 0% { background: var(--bg); color: var(--fg); } 50% { background: var(--fg); color: var(--bg); } }
+:root.inv { --bg: #ececec; --fg: #050505; --dim: #6a6a6a; --line: #050505; --stripe: #ececec; }
+.floater:focus-visible { outline: 3px solid var(--fg); outline-offset: 3px; }
+@keyframes belt { to { transform: translateX(-50%); } }
+
+.sec-h { display: flex; justify-content: space-between; gap: 12px; margin: 0 0 12px; font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
+.index { list-style: none; margin: 0; padding: 0; border-top: 1px solid #2a2a2a; }
+.index li { border-bottom: 1px solid #2a2a2a; }
+.index .row { display: grid; grid-template-columns: 5.5em minmax(0, 1fr) auto; gap: 12px; align-items: baseline; padding: 18px 0; font-family: var(--mono); font-size: 14px; color: var(--fg); text-decoration: none; transition: background .15s, color .15s, padding .15s; }
+.index a.row:hover { background: var(--fg); color: var(--bg); padding-inline: 12px; }
+.index a.row:hover .id, .index a.row:hover .st { color: var(--bg); }
+.index a.row:focus-visible { outline: 3px solid var(--fg); outline-offset: 2px; }
+.index .id { color: var(--dim); }
+.index .name { font-family: var(--display); font-weight: 800; font-size: clamp(22px, 4vw, 32px); letter-spacing: -.02em; }
+.index div.row .name { color: var(--dim); }
+.index .st { color: var(--dim); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
+
+footer { font-family: var(--mono); font-size: 12px; color: var(--dim); letter-spacing: .06em; text-transform: uppercase; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+@media (max-width: 480px) {
+  .index .row { grid-template-columns: 3.5em minmax(0, 1fr); }
+  .index .st { grid-column: 2; }
+}
+@media (prefers-reduced-motion: reduce) {
+  h1, .belt-track, .floater { animation: none; }
+  .belt-track { width: auto; flex-wrap: wrap; gap: 8px 24px; }
+  .belt-track [aria-hidden="true"] { display: none; }
+}
+</style>
+
+<div class="wrap">
+  <div class="top"><span>Label</span><span class="top-words"><button type="button" class="tw">Ideas</button> / <button type="button" class="tw">Music</button> / <button type="button" class="tw">Art</button> / <button type="button" class="tw">Concepts</button></span></div>
+
+  <h1>PUSSSNPUR</h1>
+
+  <p class="statement">I created this label to house my ideas, my procrastinations, my music, art, and concepts—pouring every bit of my heart into it. Perhaps it was a bad decision, perhaps not. Regardless, I hope my work inspires you to create your own art, music, and visuals. We always start somewhere, even in our most vulnerable moments. So, go on. Make the music you want, the music you dream of, and the music you love.</p>
+
+  <a class="link" id="localwho" href="https://pusssnpur.github.io/localwho.html" target="_blank" rel="noopener">LOCALWHO // VIEW</a>
+
+  <div class="belt">
+    <div class="belt-track" id="belt"></div>
+  </div>
+
+  <section>
+    <h2 class="sec-h"><span>Catalogue</span><span>Releases</span></h2>
+    <ul class="index">
+      <li><a class="row" href="https://localwho.bandcamp.com/abortion" target="_blank" rel="noopener"><span class="id">001</span><span class="name">abortion</span><span class="st">25 May 2026</span></a></li>
+      <li><a class="row" href="https://localwho.bandcamp.com/ily4eva" target="_blank" rel="noopener"><span class="id">002</span><span class="name">ily4eva</span><span class="st">24 Jul 2026</span></a></li>
+      <li><div class="row"><span class="id">003</span><span class="name">???</span><span class="st">TBA</span></div></li>
+    </ul>
+  </section>
+
+  <footer><span>pusssnpur</span><span>2026</span></footer>
+</div>
+
+<script>
+(function () {
+  var WHO = "https://pusssnpur.github.io/who.html";
+  var WORDS = ["Ideas", "Procrastinations", "Music", "Art", "Concepts"];
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  [].forEach.call(document.querySelectorAll(".top .tw"), function (b) {
+    b.addEventListener("click", function () { burst(); });
+  });
+
+  /* belt: first set are real buttons, the rest are decorative copies for the loop */
+  var track = document.getElementById("belt");
+  for (var s = 0; s < 4; s++) {
+    WORDS.forEach(function (w) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.textContent = w;
+      if (s > 0) { b.setAttribute("aria-hidden", "true"); b.tabIndex = -1; }
+      b.addEventListener("click", burst);
+      track.appendChild(b);
+    });
+  }
+
+  /* stage 1 (press a word): the page flickers and every letter becomes ?
+     stage 2 (press anywhere): letters scramble into garbage, then the text
+     comes back and flashing ??? boxes float around the page */
+  var state = "idle", saved = new Map(), flickTimer = 0;
+  var GARBAGE = "\u2593\u2592\u2591\u2588\u2580\u2584#@%&$\u00a7\u00a4\u00d7\u00f7\u00b1\u00b6\u0192\u2206\u03a9\u2248\u2260\u221e\u2211\u221a\u222b";
+
+  function textNodes() {
+    var out = [], w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null), n;
+    while ((n = w.nextNode())) {
+      var p = n.parentElement;
+      if (!p || /^(SCRIPT|STYLE)$/.test(p.tagName) || p.closest(".floater")) continue;
+      if (!/\S/.test(saved.has(n) ? saved.get(n) : n.nodeValue)) continue;
+      out.push(n);
+    }
+    return out;
+  }
+  function remap(fn) {
+    textNodes().forEach(function (n) {
+      if (!saved.has(n)) saved.set(n, n.nodeValue);
+      n.nodeValue = fn(saved.get(n));
+    });
+  }
+  function restoreText() {
+    saved.forEach(function (v, n) { n.nodeValue = v; });
+    saved.clear();
+  }
+
+  function burst() {
+    if (state !== "idle") return;
+    state = "q";
+    remap(function (s) { return s.replace(/\S/g, "?"); });
+    if (!reduce) {
+      flickTimer = setInterval(function () {
+        document.documentElement.classList.toggle("inv");
+      }, 250);
+    }
+  }
+
+  function scramble() {
+    state = "garbage";
+    clearInterval(flickTimer);
+    document.documentElement.classList.remove("inv");
+    function tick() {
+      remap(function (s) {
+        return s.replace(/\S/g, function () { return GARBAGE.charAt(Math.random() * GARBAGE.length | 0); });
+      });
+    }
+    tick();
+    var t = reduce ? 0 : setInterval(tick, 70);
+    setTimeout(function () {
+      if (t) clearInterval(t);
+      restoreText();
+      state = "idle";
+      for (var i = 0; i < 7; i++) spawn(Math.random() * innerWidth, Math.random() * innerHeight);
+    }, reduce ? 700 : 1200);
+  }
+
+  /* while the page is in stage 1 or 2, a press never follows a link; it advances the sequence */
+  document.addEventListener("click", function (e) {
+    if (state === "idle") return;
+    e.preventDefault();
+    e.stopPropagation();
+    if (state === "q") scramble();
+  }, true);
+
+  /* tap the page: a ??? appears and drifts around; tapping it opens who.html */
+  var floaters = [], MAX = 12, last = 0, raf = 0;
+  document.addEventListener("click", function (e) {
+    if (e.target.closest("a, button, .floater")) return;
+    spawn(e.clientX, e.clientY);
+  });
+  function spawn(cx, cy) {
+    var a = document.createElement("a");
+    a.className = "floater";
+    a.href = WHO;
+    a.target = "_blank";
+    a.rel = "noopener";
+    a.textContent = "???";
+    a.setAttribute("aria-label", "???");
+    document.body.appendChild(a);
+    var w = a.offsetWidth, h = a.offsetHeight;
+    var f = {
+      el: a, w: w, h: h,
+      x: Math.min(Math.max(cx - w / 2, 0), innerWidth - w),
+      y: Math.min(Math.max(cy - h / 2, 0), innerHeight - h),
+      vx: (Math.random() < .5 ? -1 : 1) * (30 + Math.random() * 50),
+      vy: (Math.random() < .5 ? -1 : 1) * (30 + Math.random() * 50),
+      hover: false
+    };
+    a.style.transform = "translate(" + f.x + "px," + f.y + "px)";
+    a.addEventListener("pointerenter", function () { f.hover = true; });
+    a.addEventListener("pointerleave", function () { f.hover = false; });
+    floaters.push(f);
+    if (floaters.length > MAX) floaters.shift().el.remove();
+    if (!reduce && !raf) { last = performance.now(); raf = requestAnimationFrame(step); }
+  }
+  function step(t) {
+    var dt = Math.min((t - last) / 1000, .05);
+    last = t;
+    floaters.forEach(function (f) {
+      if (f.hover) return;
+      f.x += f.vx * dt; f.y += f.vy * dt;
+      var mx = innerWidth - f.w, my = innerHeight - f.h;
+      if (f.x < 0) { f.x = 0; f.vx = Math.abs(f.vx); }
+      if (f.x > mx) { f.x = mx; f.vx = -Math.abs(f.vx); }
+      if (f.y < 0) { f.y = 0; f.vy = Math.abs(f.vy); }
+      if (f.y > my) { f.y = my; f.vy = -Math.abs(f.vy); }
+      f.el.style.transform = "translate(" + f.x + "px," + f.y + "px)";
+    });
+    raf = floaters.length ? requestAnimationFrame(step) : 0;
+  }
+})();
+</script>
+
 </html>
