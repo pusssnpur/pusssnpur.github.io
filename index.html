@@ -409,7 +409,7 @@ footer { font-family: var(--mono); font-size: 12px; color: var(--dim); letter-sp
     var v = nlEmail.value.trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) {
       e.preventDefault();
-      nlMsg.className = "nl-msg err"; nlMsg.textContent = "That email doesn't look right.";
+      nlMsg.className = "nl-msg err"; nlMsg.textContent = "dementia, dyslexia or anorexia. choose one since your email is on ozempic and its wrong";
       return;
     }
     if (!KIT_ACTION) {
@@ -418,7 +418,7 @@ footer { font-family: var(--mono); font-size: 12px; color: var(--dim); letter-sp
       return;
     }
     nl.action = KIT_ACTION;
-    nlMsg.className = "nl-msg"; nlMsg.textContent = "Sent. Check your inbox to confirm.";
+    nlMsg.className = "nl-msg"; nlMsg.textContent = "Sent. Check your shitbox to confirm. its probably in spam.";
     setTimeout(function () { nl.reset(); }, 400);
   });
 })();
