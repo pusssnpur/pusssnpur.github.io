@@ -130,8 +130,24 @@ footer { font-family: var(--mono); font-size: 12px; color: var(--dim); letter-sp
 .ad .pop-bar { cursor: default; touch-action: auto; }
 .ad a { display: block; line-height: 0; }
 .ad img { width: 100%; height: auto; display: block; }
+.news { display: flex; flex-direction: column; gap: 12px; }
+.nl-toggle { appearance: none; width: 100%; background: var(--bg); text-align: left; cursor: pointer; border-radius: 0; }
+.nl-toggle[aria-expanded="true"] { background: var(--fg); color: var(--bg); }
+.nl { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: stretch; }
+.nl input[type="email"] { min-width: 0; padding: 16px 18px; background: var(--bg); border: 2px solid var(--line); border-radius: 0; color: var(--fg); font-family: var(--mono); font-size: 16px; letter-spacing: .02em; }
+.nl input[type="email"]::placeholder { color: var(--dim); }
+.nl input[type="email"]:focus-visible { outline: 3px solid var(--fg); outline-offset: 3px; }
+.nl-btn { appearance: none; border: 2px solid var(--line); border-radius: 0; background: var(--bg); color: var(--fg); padding: 0 22px; font-family: var(--mono); font-size: 15px; letter-spacing: .04em; text-transform: uppercase; cursor: pointer; transition: background .15s, color .15s; }
+.nl-btn:hover { background: var(--fg); color: var(--bg); }
+.nl-btn:focus-visible { outline: 3px solid var(--fg); outline-offset: 3px; }
+.nl-msg { grid-column: 1 / -1; margin: 0; min-height: 1.4em; font-family: var(--mono); font-size: 13px; letter-spacing: .04em; color: var(--dim); }
+.nl-msg.err { color: #ff5a5a; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
 @media (max-width: 480px) {
   .index .row { grid-template-columns: 3.5em minmax(0, 1fr); }
+  .nl { grid-template-columns: 1fr; }
+  .nl-btn { padding: 16px 18px; text-align: left; }
   .index .st { grid-column: 2; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -153,6 +169,19 @@ footer { font-family: var(--mono); font-size: 12px; color: var(--dim); letter-sp
   <div class="belt">
     <div class="belt-track" id="belt"></div>
   </div>
+
+  <section class="news" aria-label="Newsletter">
+    <button class="link nl-toggle" id="nl-toggle" type="button" aria-expanded="false" aria-controls="nl-panel">NEWSLETTER // SUBSCRIBE</button>
+    <div class="nl-panel" id="nl-panel" hidden>
+      <form id="nl" class="nl" method="post" target="nlframe" novalidate>
+        <label class="sr-only" for="nl-email">Email address</label>
+        <input id="nl-email" name="email_address" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com" required>
+        <button class="nl-btn" type="submit">Subscribe</button>
+        <p class="nl-msg" id="nl-msg" role="status" aria-live="polite"></p>
+      </form>
+      <iframe name="nlframe" title="Newsletter signup" hidden></iframe>
+    </div>
+  </section>
 
   <section>
     <h2 class="sec-h"><span>Catalogue</span><span>Releases</span></h2>
@@ -257,7 +286,7 @@ footer { font-family: var(--mono); font-size: 12px; color: var(--dim); letter-sp
   /* tap the page: a ??? appears and drifts around; tapping it opens who.html */
   var floaters = [], MAX = 12, last = 0, raf = 0;
   document.addEventListener("click", function (e) {
-    if (e.target.closest("a, button, .floater")) return;
+    if (e.target.closest("a, button, .floater, form, input, label")) return;
     spawn(e.clientX, e.clientY);
   });
   function spawn(cx, cy) {
@@ -356,10 +385,42 @@ footer { font-family: var(--mono); font-size: 12px; color: var(--dim); letter-sp
     document.body.appendChild(ad);
     x.addEventListener("click", function () {
       ad.remove(); adOpen = false;
-      setTimeout(openAd, 30000);
     });
   }
-  setTimeout(openAd, 2500);
+  /* first one shows up somewhere between 25 and 90 seconds in; more are random too */
+  function scheduleAd() {
+    setTimeout(function () { openAd(); if (adN < 4) scheduleAd(); }, 25000 + Math.random() * 65000);
+  }
+  scheduleAd();
+
+  /* ---------- newsletter (Kit) ----------
+     In Kit: Grow > Landing Pages & Forms > your form > Publish > HTML > "Embed using HTML".
+     Copy the address inside action="..." and paste it between the quotes below. */
+  var KIT_ACTION = "https://app.kit.com/forms/10084418/subscriptions";
+  var nlToggle = document.getElementById("nl-toggle"), nlPanel = document.getElementById("nl-panel");
+  var nl = document.getElementById("nl"), nlMsg = document.getElementById("nl-msg"), nlEmail = document.getElementById("nl-email");
+  nlToggle.addEventListener("click", function () {
+    var open = nlPanel.hidden;
+    nlPanel.hidden = !open;
+    nlToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    if (open) setTimeout(function () { try { nlEmail.focus({ preventScroll: true }); } catch (e) {} }, 0);
+  });
+  nl.addEventListener("submit", function (e) {
+    var v = nlEmail.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) {
+      e.preventDefault();
+      nlMsg.className = "nl-msg err"; nlMsg.textContent = "That email doesn't look right.";
+      return;
+    }
+    if (!KIT_ACTION) {
+      e.preventDefault();
+      nlMsg.className = "nl-msg err"; nlMsg.textContent = "Newsletter isn't connected yet.";
+      return;
+    }
+    nl.action = KIT_ACTION;
+    nlMsg.className = "nl-msg"; nlMsg.textContent = "Sent. Check your inbox to confirm.";
+    setTimeout(function () { nl.reset(); }, 400);
+  });
 })();
 </script>
 
